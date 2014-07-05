@@ -22,4 +22,22 @@
   <tr>
     <td>基于媒介的 Catalog</td><td>Media Based Catalog</td><td>MBC</td>
   </tr>
+  <tr>
+    <td>物理块</td><td>Physical Block</td><td></td>
+  </tr>
+  <tr>
+    <td>物理块地址</td><td>Physical Block Address</td><td>PBA</td>
+  </tr>
+  <tr>
+    <td>循环冗余校验</td><td>Cyclic Redundancy Check</td><td>CRC</td>
+  </tr>
+  <tr>
+    <td>纠错码</td><td>Error Correcting Code</td><td>ECC</td>
+  </tr>
+  <tr>
+    <td>格式化的逻辑块</td><td>Format Logical Block</td><td>FLB</td>
+  </tr>
+  <tr>
+    <td>格式化的逻辑地址</td><td>Format Logical Address</td><td>FLA</td>
+  </tr>
 </table>
