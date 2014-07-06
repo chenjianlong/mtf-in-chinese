@@ -40,4 +40,7 @@
   <tr>
     <td>格式化的逻辑地址</td><td>Format Logical Address</td><td>FLA</td>
   </tr>
+  <tr>
+    <td>流对齐因子</td><td>Stream Alignment Factor</td><td></td>
+  </tr>
 </table>
