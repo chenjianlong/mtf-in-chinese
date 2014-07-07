@@ -112,7 +112,7 @@ _DBLK Type_ 成员用于指定 DBLK 的类型（MTF\_SSET，MTF\_VOLB，等）�
 下表中没有列出的比特保留下来作为将来扩展之用。
 
 <table>
-  <caption>表3. 块属性</caption>
+  <caption>**表3. 块属性**</caption>
   <tr>
     <th>名称</th><th>描述</th><th>DBLK 类型</th><th>值</th>
   </tr>

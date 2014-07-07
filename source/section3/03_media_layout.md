@@ -30,31 +30,21 @@ SPAD 数据流 用于填充 MTF\_TAPE\_DBLK 和 _卷标_ 之间的间隙。
 就是说， _描述块_ 的定义已经隐含了它们之间的父子关系并且当一个未知的 _描述块_ 出现时，将无法决定它们的父子关系。
 
 <table>
-  <caption>表1 数据集中的隐含优先级</caption>
+  <caption>**表1. 数据集中的隐含优先级**</caption>
   <tr>
-    <th></th>
-    <th>父</th>
-    <th>子</th>
+    <th></th><th>父</th><th>子</th>
   </tr>
   <tr>
-    <th>MTF_SSET</th>
-    <td></td>
-    <td>MTF_VOLB</td>
+    <th>MTF\_SSET</th><td></td><td>MTF\_VOLB</td>
   </tr>
   <tr>
-    <th>MTF_VOLB</th>
-    <td>MTF_SSET</td>
-    <td>MTF_DIRB</td>
+    <th>MTF\_VOLB</th><td>MTF\_SSET</td><td>MTF\_DIRB</td>
   </tr>
   <tr>
-    <th>MTF_DIRB</th>
-    <td>MTF_VOLB</td>
-    <td>MTF_FILE</td>
+    <th>MTF\_DIRB</th><td>MTF\_VOLB</td><td>MTF\_FILE</td>
   </tr>
   <tr>
-    <th>MTF_FILE</th>
-    <td></td>
-    <td></td>
+    <th>MTF\_FILE</th><td></td><td></td>
   </tr>
 </table>
 
