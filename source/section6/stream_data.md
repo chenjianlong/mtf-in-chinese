@@ -31,7 +31,7 @@
     <td>PAD\_STREAM</td><td>填充到下一个 DBLK 流。</td><td>'SPAD'</td>
   </tr>
   <tr>
-    <td>SPARSE\_STREAM</td><td>稀疏数。</td><td>'SPAR'</td>
+    <td>SPARSE\_STREAM</td><td>稀疏流。</td><td>'SPAR'</td>
   </tr>
   <tr>
     <td>MBC\_LMO\_SET\_MAP\_STREAM</td><td>查看 第一类 MBC。</td><td>'TSMP'</td>

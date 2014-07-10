@@ -28,7 +28,7 @@
     <td>18 12h</td><td>数据压缩算法</td><td>UINT16</td><td>2 字节</td>
   </tr>
   <tr>
-    <td>20 14h</td><td>校验和</td><td>UINT16</td><td>2 字节</td>
+    <td>20 14h</td><td>校验</td><td>UINT16</td><td>2 字节</td>
   </tr>
   <caption>**结构 15. 流头（MTF\_STREAM\_HDR）**</caption>
 </table>
