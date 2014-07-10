@@ -25,7 +25,7 @@
 * [数据流](section6/section6.md)
    * [流头（MTF_STREAM_HDR）](section6/stream_hdr.md)
    * [流数据](section6/stream_data.md)
-   * [可变长度的流](section6/variable_length.md)
+   * [变长流](section6/variable_length.md)
    * [数据压缩](section6/data_compression.md)
    * [数据加密](section6/data_encryption.md)
 * [基于媒介的 Catalog](section7/section7.md)
