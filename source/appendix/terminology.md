@@ -43,4 +43,7 @@
   <tr>
     <td>流对齐因子</td><td>Stream Alignment Factor</td><td></td>
   </tr>
+  <tr>
+    <td>文件/目录 细节</td><td>File/Directory Detail</td><td>FDD</td>
+  </tr>
 </table>
