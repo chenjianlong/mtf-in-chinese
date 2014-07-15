@@ -8,7 +8,7 @@
 <table>
   <caption>**表 24. 基于媒介的 Catalog 控制 Bits**</caption>
   <tr>
-    <th>Bit</th><th>Name</th><th>Description</th><th>Value</th>
+    <th>Bit Name</th><th>Description</th><th>Value</th>
   </tr>
   <tr>
     <td>MTF\_SET\_MAP\_EXISTS</td><td>这个比特在 MTF\_TAPE DBLK 表示媒体簇中的每个数据集都后面都必须写 Set Map 流。</td><td>BIT16</td>
