@@ -34,7 +34,7 @@
    * [第一类 MBC](section7/type_1_mbc.md)
    * [第二类 MBC](section7/type_2_mbc.md)
 * [结束媒体处理](section8/section8.md)
-* [附录 A 操作系统的相关数据](appendix/appendix_a.md)
+* [附录 A 操作系统的特性数据](appendix/appendix_a.md)
 * [附录 B 密码加密算法](appendix/appendix_b.md)
 * [附录 C 数据压缩算法](appendix/appendix_c.md)
 * [附录 D 实现问题](appendix/appendix_d.md)
