@@ -146,12 +146,11 @@ DISPLAYABLE\_SIZE 字段应该与关联的数据集中的 MTF\_DB\_HDR
 #### LINK {4 bytes}
 
 MTF\_FDD\_HDR 结构的 LINK 字段指示另一个 FDD 条目的偏移。
-依赖与 FDD 条目使用的类型 LINK 有不同的含义。
+依赖于 FDD 条目使用的类型 LINK 有不同的含义。
 
-* File entries The stream offset of their parent directory.
-* Volume entries The stream offset of the next volume entry, or zero for the last MTF_FDD_VOLB entry.
-* Directory entries The stream offset of the next sibling directory (i.e. next directory having same parent), or
-zero for the last sibling under any given parent.
+* 文件条目 父目录的流偏移。
+* 卷条目 下一个卷条目的流偏移，如果是最后一个 MTF\_FDD\_VOLB 条目那么这个字段为 0。
+* 目录条目 下一个兄弟目录的流偏，如果是最后一个目录则为 0。
 
 #### OS\_ID {1 byte}
 
@@ -238,13 +237,16 @@ FDD 公共头包含了每个 FDD 条目开头都有的 36 字节的 MTF\_FDD\_HD
 在前面已经介绍了这个结构。
 MTF\_FDD\_HDR 的 TYPE 字段的值为 'VOLB'。
 
-##### VOLB Attributes {4 bytes}
+##### 卷属性 {4 bytes}
 
-The VOLB Attributes field is the same as that found in the corresponding MTF_VOLB DBLK in the Data Set. Refer to the MTF_VOLB DBLK description for information on the bits in this field.
+卷属性 字段与在数据集中关联的 MTF\_VOLB DBLK 的卷属性字段相同。
+参考 MTF\_VOLB DBLK 描述块 来获取关于本字段的更多信息。
 
-##### Device Name {4 bytes}
+##### 设备名 {4 bytes}
 
-The Device Name field uses the four byte MTF_TAPE_ADDRESS low level structure. This field is the same as the corresponding Device Name field in the MTF_VOLB DBLK of the Data Set, with one exception: The second two bytes used for the Offset field is an offset from the start of this MTF_FDD_VOLB entry to the start of the string containing the Device Name.
+设备名 使用 4 字节的 MTF\_TAPE\_ADDRESS 结构。
+这个字段与数据集中关联的 MTF\_VOLB DBLK 的设备名字段相同，
+除了：这个字段的第二个双字节的偏移基于 MTF\_FDD\_VOLB 条目的开头的。
 
 ##### Volume Name {4 bytes}
 
