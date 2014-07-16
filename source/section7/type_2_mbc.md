@@ -1,43 +1,41 @@
 # 第二类 MBC
 
-This section describes the Type 2 Media Based Catalog.
-The Type 2 Media Based Catalog includes both a Set Map and
-File/Directory Detail (FDD).
-Both of these are implemented as fixed length data streams attached to the End Of Set (MTF_ESET) DBLK.
+这部分说明了 第二类 MBC。
+第二类 MBC 包含了一个 Set Map 以及 文件/目录 细节（FDD）。
+所有的这些都被设计为附加在 MTF\_ESET DBLK 的末尾的定长数据流。
 
 ![](images/type_2_mbc_layout.png)
 
-The MAP2 and FDD2 Stream Headers are aligned on the standard MTF stream header alignment of 4 bytes and the SPAD
-data stream pads to the next physical block boundary. The first Reserved for MBC field of the MTF_ESET is used to store
-the physical block address of the MTF_ESET.
+MAP2 与 FDD2 流头与标准的 MTF 流头一样 4 字节对齐并且后面跟着一个 SPAD 数据流填充到下一个物理块。
+MTF\_ESET 的第一个为 MBC 预留的字段用于存储 MTF\_ESET 的物理块地址。
 
-To create Type 2 MBC, the Media Based Catalog Type field of the MTF_TAPE DBLK is set to a value of 2 and the Media
-Catalog Version field of the MTF_SSET DBLK is set to a value of 1.
+为了创建第二类 MBC，MTF\_TAPE DBLK 的基于媒介的类型 字段设置为 2 然后 MTF\_SSET DBLK 的媒介 Catalog 版本字段设置为 1。
 
 ## Set Map
 
-The Set Map is written as a stream with the Stream ID field of the Stream Header is set to ‘ MAP2’. The Stream Header
-identifies the stream as being a Type 2 MBC Set Map and is followed by a series of DBLKs. A Type 2 Set Map is comprised
-of MTF_TAPE, MTF_SSET, MTF_VOLB, and MTF_ESET DBLKs. All DBLKs are packed. The Offset To First Event field
-of the MTF_DB_HDR is modified to point to the next DBLK in the data stream.
+Set Map 是一个流头的流 ID 字段为 'MAP2' 的流。
+流头标识这个流是 第二类 MBC Set Map 随后跟着一系列的 DBLKs。
+第二类 Set Map 由 MTF\_TAPE，MTF\_SSET，MTF\_VOLB 和 MTF\_ESET DBLKs 组成。
+所有的 DBLKs 都是被封装的。
+MTF\_DB\_HDR 的 Offset To First Event field 字段改为指向数据流中的下一个 DBLK。
 
 ![](images/type_2_set_map_example.png)
 
-## File/Directory Detail
+## 文件/目录 细节
 
-The FDD is written as a stream with the Stream ID field of the Stream Header is set to ‘FDD2’. The Stream Header identifies
-the stream as being a Type 2 MBC FDD and is followed by a series of DBLKs.
-A Type 2 FDD is comprised of MTF_VOLB, MTF_DIRB, MTF_FILE, and MTF_CFIL DBLKs.
-All DBLKs are packed.
-The Reserved for MBC and Offset To First Event fields of the Common Block Header modified.
-The Reserved for MBC is used to indicate the media number that the DBLK was written to and the Offset To First Event is used to point to the next DBLK in the FDD.
+FDD 是一个流头的流 ID 字段为 'FDD2' 的流。
+流头标这是一个第二类 MBC FDD 以及跟着一系列的 DBLKs。
+第二类 FDD 由 MTF\_VOLB，MTF\_DIRB，MTF\_FILE 和 MTF\_CFIL DBLKs 组成。
+所有的 DBLKs 都是被封装的。
+公共头的 Reserved for MBC 和 Offset To First Event fields 字段被修改。
+Reserved for MBC 标识这个 DBLKs 写到的媒介号而 Offset To First Event fields 指向 FDD 的下一个 DBLK。
 
 ![](images/type_2_mbc_fdd.png)
 
-## End of Media Issues
+## 媒体的结束问题
 
-It is possible to encounter EOM while writing MBC information to media.
-Refer to the section “End of Media Processing” for detailed information on the way it is handled under different conditions.
-When spanning from one media to the next, the set map is written as a data stream attached to the MTF_TAPE DBLK.
+有可能在写 MBC 信息到媒介时出现遇到 EOM 的情况。
+查看 **结束媒体的处理** 章节获取在不同情况下进行处理的详细信息。
+当跨越到下一个媒介时，Set Map 如同一个关联到 MTF\_TAPE DBLK 的数据流一样。
 
 ![](images/type_2_mbc_spanning.png)
