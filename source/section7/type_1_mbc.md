@@ -16,7 +16,7 @@ FDD 包括数据集中 MTF\_VOLB，MTF\_DIRB 和 MTF\_FILE DBLKs 的条目。
 Set Map 和 FDD 都是作为与 MTF\_ESET 关联的数据流，以及与物理块边界对齐从而允许应用程序可以直接找到它。
 先写 FDD，然后是 Set Map。
 它允许 FDD 和 Set Map 都写，或者只写 Set Map 流，但是只写 FDD 是不允许的。
-注意：FDD 可以只在某些数据集添加，但是 Set Map 必须用于每个数据集的 Set Map 是必须的，因为它会添加到媒体簇。
+注意：FDD 可以只在某些数据集添加，但是 Set Map 必须在每个数据集都添加，因为它会添加到媒体簇。
 
 第二个 MTF\_ESET DBLK 跟在 Set Map 流的下一个物理边界，并且它的后面会跟在一个卷标来结束整个数据集。
 FDD 和 Set Map 和物理块地址包含在第二个 MTF\_ESET DBLK 的 8 字节的字段中。
@@ -248,25 +248,30 @@ MTF\_FDD\_HDR 的 TYPE 字段的值为 'VOLB'。
 这个字段与数据集中关联的 MTF\_VOLB DBLK 的设备名字段相同，
 除了：这个字段的第二个双字节的偏移基于 MTF\_FDD\_VOLB 条目的开头的。
 
-##### Volume Name {4 bytes}
+##### 卷名 {4 bytes}
 
-The Volume Name field also uses the four byte MTF_TAPE_ADDRESS structure and is the same as the corresponding Volume Name field in the MTF_VOLB DBLK. The Offset field in the MTF_TAPE_ADDRESS low level structure is an offset from the start of this MTF_FDD_VOLB entry to the start of the string containing the Volume Name.
+卷名字段也是使用 4 字节的 MTF\_TAPE\_ADDRESS 结构并且和关联的 MTF\_VOLB DBLK 的 卷名字段相同。
+MTF\_TAPE\_ADDRESS 的 Offset 字段是从这个 MTF\_FDD\_VOLB 条目开始的偏移指向卷名字符串的开头。
 
-##### Machine Name {4 bytes}
+##### 机器名 {4 bytes}
 
-The Machine Name field also uses the four byte MTF_TAPE_ADDRESS structure and is the same as the Machine Name field in the corresponding MTF_VOLB DBLK. The Offset field in the MTF_TAPE_ADDRESS structure is an offset from the start of this MTF_FDD_VOLB entry to the start of the string containing the Machine Name.
+机器名字段同样使用 4 字节的 MTF\_TAPE\_ADDRESS 结构并且与关联的 MTF\_VOLB DBLK 的机器名字段相同。
+MTF\_TAPE\_ADDRESS 的 Offset 字段是本 MTF\_FDD\_VOLB 条目的开始算起的偏移指向包含机器名的字符串。
 
 ##### OS_SPECIFIC_DATA {4 bytes}
 
-The OS Specific Data field uses the four byte MTF_TAPE_ADDRESS structure. Its contents are either zero or the same as the corresponding OS Specific Data field in the MTF_DB_HDR structure within the MTF_VOLB DBLK. The Offset field contains the offset from the start of this MTF_FDD_VOLB entry to the string containing a copy of the OS information used for the corresponding MTF_VOLB DBLK written to media.
+OS Specific Data 字段使用 4 字节的 MTF\_TAPE\_ADDRESS 结构。
+它的内容要么是 0 要么是与 MTF\_VOLB\_DBLK 关联的 MTF\_DB\_HDR 的 OS Specific Data 字段相同。
+Offset 字段包含了这个 MTF\_FDD\_VOLB 条目开头算起的偏移指向包含 MTF\_VOLB DBLK 需要的 OS 信息的拷。
 
-##### Media Write Date {5 bytes}
+##### 媒介写日期 {5 bytes}
 
-The Media Write Date field uses the five byte MTF_DATE_TIME low level structure and is the same as the Media Write Date field in the corresponding MTF_VOLB DBLK.
+媒介写日期 使用 MTF\_DATE\_TIME 结构与关联的 MTF\_VOLB DBLK 的媒介写日期 字段相同。
 
 #### FDD 目录条目（MTF\_FDD\_DIRB）
 
-The FDD Directory Entry corresponds with the MTF_DIRB DBLK it represents in the Data Set. Many of the data fields found in this structure contain copies of the data found in the MTF_DIRB DBLK fields.
+FDD 目录条目对应数据集中的 MTF_DIRB DBLK 条目。
+这个结构的很多字段是从 MTF_DIRB DBLK 的相应字段复制过来的。
 
 <table>
   <tr>
@@ -299,41 +304,52 @@ The FDD Directory Entry corresponds with the MTF_DIRB DBLK it represents in the 
   <caption>**结构 28. 第一个类 MBC FDD 目录条目（MTF\_FDD\_DIRB）**</caption>
 </table>
 
-##### FDD Common Header {36 bytes}
+##### FDD 公共头 {36 bytes}
 
-The FDD Common Header field contains the 36 byte MTF_FDD_HDR structure that is found at the beginning of every FDD entry Stream. This structure was described on the preceding pages. The TYPE field within the MTF_FDD_HDR structure will be set to ‘DIRB’.
+FDD 公共头字段是一个 36 字节的 MTF\_FDD\_HDR 结构，存在每个 FDD 条目流的开头。
+这个结构在前面已经说明。
+MTF_FDD_HDR 的 TYPE 字段应该为 'DIRB'。
 
-##### Last Modification Date {5 bytes}
+##### 最后修改时间 {5 bytes}
 
-The Last Modification Date field uses the five byte MTF_DATE_TIME structure and contains the same data as the Last Modification Date field in the corresponding MTF_DIRB DBLK.
+最后修改时间使用 5 字节的 MTF\_DATE\_TIME 结构，和关联的 MTF\_DIRB DBLK 的最后修改时间字一样。-
 
-##### Creation Date {5 bytes}
+##### 创建日期 {5 bytes}
 
-The Creation Date field is another five byte field using the MTF_DATE_TIME low level structure. This field contains the date and time when the directory was first created. The data contained here is the same as that found in the corresponding MTF_DIRB DBLK.
+创建日期 字段是另一个 5 字节的使用 MTF\_DATE\_TIME 结构的字段。
+这个字段包含了目录第一个创建的日期和时间。
+这个字段包含的内容与关联的 MTF_DIRB DBLK 相关字段一样。
 
-##### Backup Date {5 bytes}
+##### 备份日期 {5 bytes}
 
-The Backup Date field is another five byte MTF_DATE_TIME field containing the date and time that the directory was last backed up. This is the same value as that found in the corresponding MTF_DIRB DBLK in the Data Set.
+备份日期字段是另一个 5 字节的 MTF\_DATE\_TIME 字段，包含了目录上一次备份的日期和时间。
+这与关联的数据集中的 MTF\_DIRB DBLK 相关字段一样。
 
-##### Last Access Date {5 bytes}
+##### 最后访问日期 {5 bytes}
 
-The Last Access Date field also uses the five byte MTF_DATE_TIME low level structure describing the date and time that the directory was last accessed. The data found here is a duplicate of the same field in the MTF_DIRB DBLK.
+最后访问日期 字段同样使用 5 字节的 MTF\_DATE\_TIME 结构来描述目录最后访问的日期和时间。
+这里的数据 MTF\_DIRB DBLK 中的相同字段是一样的。
 
-##### DIRB Attributes {4 bytes}
+##### 目录属性 {4 bytes}
 
-The DIRB Attributes field is four bytes in length organized as a 32-bit field. DIRB Attributes define characteristics of the directory represented by this MTF_DIRB DBLK. This field is the same as that found in the corresponding MTF_DIRB DBLK.
+目录属性字段是由 4 个字节组成的 32 位字段。
+目录属性定义了 MTF\_DIRB DBLK 代表的目录的行为。
+这个字段和 MTF\_DIRB DBLK 的对应字段一样。
 
-##### Directory Name {4 bytes}
+##### 目录名 {4 bytes}
 
-The Directory Name field is four bytes in length using an MTF_TAPE_ADDRESS low level structure that specifies the location and size of the name associated with this directory. The Offset field used in this structure specifies the offset from the beginning of this MTF_FDD_DIRB entry to the beginning of the string containing the directory name.
+目录名字段是一个 4 字节的 MTF\_TAPE\_ADDRESS 结构，用于指定这个目录的名称的位置和大小。
+Offset 字段指定本 MTF\_FDD\_DIRB 条目开头与包含了目录名的字符串之间的偏移。
 
-##### OS_SPECIFIC_DATA {4 bytes}
+##### OS\_SPECIFIC\_DATA {4 bytes}
 
-The OS_SPECIFIC_DATA field uses the four byte MTF_TAPE_ADDRESS structure; its contents are either zero or a copy of the data found in the corresponding field of the MTF_DB_HDR structure within the MTF_DIRB DBLK. The Offset field contains the offset from the start of this MTF_FDD_DIRB entry to the string containing a copy of the OS information used for the corresponding MTF_DIRB DBLK written to media.
+OS\_SPECIFIC\_DATA 字段使用 4 字节的 MTF\_TAPE\_ADDRESS 结构：它的内容要么是 0，要么是与之关联的 MTF\_DIRB DBLK 的 MTF\_DB\_HDR 的对应字段的复制。
+Offset 字段包含了从这个 MTF\_FDD\_DIRB 条目开始算起到关联的 MTF_DIRB DBLK 使用的 OS 信息的字符串的偏移。
 
 #### FDD 文件条目（MTF\_FDD\_FILE）
 
-The FDD File Entry corresponds with the MTF_FILE DBLK it represents in the Data Set. Many of the data fields found in this structure contain copies of the data found in the MTF_FILE DBLK fields.
+FDD 文件条目与数据集中的 MTF\_FILE DBLK 关联。
+这个结构的很多字段都是从 MTF\_FILE DBLK 的对应字段复制过来的。
 
 <table>
   <tr>
@@ -366,38 +382,48 @@ The FDD File Entry corresponds with the MTF_FILE DBLK it represents in the Data 
   <caption>**结构 29. 第一类 MBC FDD 文件条目**</caption>
 </table>
 
-##### FDD Common Header {36 bytes}
+##### FDD 公共头 {36 bytes}
 
-The FDD Common Header field contains the 36 byte MTF_FDD_HDR structure that is found at the beginning of every FDD entry Stream. This structure was described on the preceding pages. The TYPE field within the MTF_FDD_HDR structure will be set to ‘FILE’.
+FDD 公共头字段是每一个 FDD 条目流都有的 36 字节的 MTF\_FDD\_HDR 结构。
+这个结构已经在前面介绍过了。MTF\_FDD\_HDR 结构的 TYPE 字段应该设为 'FILE'。
 
-##### Last Modification Date {5 bytes}
+##### 最后修改日期 {5 bytes}
 
-The Last Modification Date field uses the five byte MTF_DATE_TIME structure and contains the same data as the Last Modification Date field in the corresponding MTF_FILE DBLK.
+最后修改日期字段使用 5 字节的 MTF\_DATE\_TIME 结构，包含了关联的 MTF\_FILE DBLK 最后修改日期字段一样的数据。
 
-##### Creation Date {5 bytes}
+##### 创建日期 {5 bytes}
 
-The Creation Date field also uses the MTF_DATE_TIME low level structure containing the date and time the directory was first created. The data contained here is a duplicate of the same field in the corresponding MTF_FILE DBLK.
+创建日期字段同样使用 MTF\_DATE\_TIME 结构，包含了目录第一个创建的日期和时间。
+这个字段的数据与关联的 MTF\_FILE DBLK 的相同字段重复。
 
-##### Backup Date {5 bytes}
+##### 备份日期　{5 bytes}
 
-The Backup Date field is an MTF_DATE_TIME low level structure containing the date and time that the directory was last backed up. This is the same as the data found in the corresponding MTF_FILE DBLK.
+备份日期是一个包含了目录上一次备份的时日期和时间的　MTF\_DATE\_TIME 结构。
+其内容与关联的　MTF\_FILE DBLK 的对应字段相同。
 
-##### Last Access Date {5 bytes}
+##### 最后访问日期 {5 bytes}
 
-The Last Access Date field is also a duplicate of the same field in the corresponding MTF_FILE DBLK. FILE Attributes {4 bytes}
-The FILE Attributes field is a 32-bit field containing the same data as found in the FILE Attributes field of the corresponding MTF_FILE DBLK in the Data Set.
+最后访问日期字段同样也是关联的　MTF\_FILE DBLK　对应字段的复制。
 
-##### File Name {4 bytes}
+##### 文件属性 {4 bytes}
 
-The File Name field uses the four byte MTF_TAPE_ADDRESS low level structure that specifies the location and size of the name associated with this file. The Offset field in this low level structure specifies the offset from the beginning of this MTF_FDD_FILE entry to the string containing the file name.
+文件属性是一个 32 位的字段，包含了数据集中关联的 MTF\_FILE DBLK 的文件属性的内容。
 
-##### OS_SPECIFIC_DATA {4 bytes}
+##### 文件名称 {4 bytes}
 
-The OS_SPECIFIC_DATA field uses the four byte MTF_TAPE_ADDRESS structure. Its contents are either zero or a copy of the data found in the corresponding field of the MTF_DB_HDR structure within the MTF_FILE DBLK. The Offset field contains the offset from the start of this MTF_FDD_FILE entry to the string containing a copy of the OS information used for the corresponding MTF_FILE DBLK written to media.
+文件名称字段是一个 4 字节的 MTF\_TAPE\_ADDRESS 结构，指定与本文件关联的名称的位置和大小。
+本结构的 Offset 字段是从本 MTF\_FDD 条目开始算起的字符串的偏移。
+
+##### OS\_SPECIFIC\_DATA {4 bytes}
+
+OS\_SPECIFIC\_DATA 字段使用 4 字节的 MTF\_TAPE\_ADDRESS 结构。
+它的内容是 0 或者是关联的 MTF\_FILE DBLK 的 MTF\_DB\_HDR 结构的对应字段的复制。
+Offset 字段包含了 MTF\_FDD\_FILE 条目开始算起到关联的 MTF\_FILE DBLK 的 OS 信息的偏移。
 
 #### FDD 结束条目（MTF_FDD_FEND）
 
-The End of FDD Entry does not corresponds with a DBLK in the Data Set. It is used to indicate the end of the FDD.
+FDD 结束条目不与数据集中任何的 DBLK 关联。
+它用于指明 FDD 的结尾。
 
 <table>
   <tr>
@@ -410,34 +436,44 @@ The End of FDD Entry does not corresponds with a DBLK in the Data Set. It is use
 </table>
 
 
-##### FDD Common Header {36 bytes}
+##### FDD 公共头 {36 bytes}
 
-The FDD Common Header field contains the 36 byte MTF_FDD_HDR structure that is found at the beginning of every FDD entry Stream. This structure was described on the preceding pages. The TYPE field within the MTF_FDD_HDR structure will be set to ‘FEND’.
+FDD 公共头字段是一个 36 字节的 MTF\_FDD\_HDR 结构，存在每个 FDD 条目流的开头。
+这个结构已经在前面说明了。
+MTF\_FDD\_HDR 结构的 TYPE 字段应该设为 'FEND'。
 
-The FEND entry is unique in that it does not correspond to a DBLK within the Data Set and does not have a record specific section. It is used to indicate the end of the FDD entries. The space following the FEND entry is zero padded up to the next Physical Block boundary. The Length field in the FDD Common Header specifies the offset to the next PBA. Typically, the Set Map will begin at the start of the next Physical Block boundary.
+FEND 条目是唯一不与数据集中的 DBLK 关联的条目，并且没有特定的部分。
+它用于指明这是 FDD 的结尾。
+跟在 FEND 条目后面的是 0 知道填充到下一个物理块边界。
+FDD 公共头的长度字段指明到下一个 PBA 的偏移。
+通常来讲，Set Map 在从下一个物理块边界开始。
 
 ## Set Map
 
-The Set Map is used to list all of the Data Sets of a media or Media Family. Each successive Set Map written to a media contains information about the Data Sets previously written to media. The Set Map, like the FDD, is written as a stream and can follow the FDD or be located on an alternate partition.
+Set Map 用于列出一个媒介或者媒体簇的所有数据集。
+每个续集的 Set Map 包含了之前数据集的信息。
+Set Map 与 FDD 一样，以流的形式写入，并且跟在 FDD 后面或者放在可选的卷中。
 
-The Set Map is written as a stream with the Stream ID field of the Stream Header is set to **‘TSMP ’**. Please refer to the Data Stream section for information on the Stream Header. The Stream Header identifies the stream as being the Set Map stream and is followed by three distinct parts.
+Set Map 是以流头的流 ID 为 **‘TSMP ’** 来写入的。
+请参考数据流的流头一节。
+流头标识了这个流是 Set Map 流并且分为以下三部分。
 
-1. Set Map Header
-2. Set Map Entries
-3. Volume Entries
+1. Set Map 头
+2. Set Map 条目
+3. 卷条目
 
-### Set Map Physical Layout
+### Set Map 物理布局
 
-The Set Map begins with the Set Map Header which specifies the number of Set Map Entries which follow.
-Each Set Map Entry is in turn followed by a number of Volume Entries as specified in the Set Map Entry.
-There is a one-to-one correspondence between the number of Set Map Entries and Volume Entries in the Set Map, and the number of
-MTF_SSET and MTF_VOLB DBLKs in the Media Family.
-This includes continuation MTF_SSET and MTF_VOLB DBLKs written during EOM processing conditions.
-See Appendix J for details on End Of Media and spanning information. The order in which the Set Map Entries and Volume Entries appear in the Set Map is identical to the order in which their corresponding MTF_SSET and MTF_VOLB DBLKs are written to media.
+Set Map 的开头是一个 Set Map 头指定了有多少个 Set Map 条目。
+每个 Set Map 条目跟随着数个卷条目。
+对于Set Map 中的 Set Map 条目和卷条目是和媒体簇中的 MTF\_SSET 和 MTF\_VOLB DBLKs 一一对应的。
+这包括了在 EOM 处理条件下续集的 MTF\_SSET 和 MTF\_VOLB DBLKs。
+查看第 8 部分来获取 End Of Media 和 spanning 信息。
+Set Map 中的 Set Map 条目和卷条目出现顺序与它们关联的 MTF\_SSET 和 MTF\_VOLB DBLKS 的顺序一致。
 
-### Set Map Header (MTF_SM_HDR)
+### Set Map 头（MTF\_SM\_HDR）
 
-The Set Map Header is an eight byte header that contains information about the Media Family to which the Set Map belongs, the number of Set Map Entries to follow, and a pad to the next stream alignment boundary.
+Set Map 头是一个 8 字节的头，包含了这个 Set Map 属于哪个媒体簇的信息，跟着有多少个 Set Map 条目，以及一个填充到下一个流对齐的字段。
 
 <table>
   <tr>
@@ -457,138 +493,221 @@ The Set Map Header is an eight byte header that contains information about the M
 
 #### Media Family ID {4 bytes}
 
-The Media Family ID field corresponds to the same field specified in the MTF_TAPE DBLK for this media.
-Please refer to the MTF_TAPE DBLK description for more information on this field.
+Media Family ID 是一个和这个媒介关联的 MTF\_TAPE DBLK 对应字段相同的字段。
+请参考 MTF\_TAPE DBLK 说明来获取这个字段更多的信息。
 
 #### Number Of Set Map Entries {2 bytes}
 
-The Number Of Set Map Entries field is two bytes in length and tells how many Set Map Entry structures are to follow this Set Map Header.
-One Set Map Entry is written for every Data Set written to the Media Family.
+Number Of Set Map Entries 字段是一个 2 字节长的用于说明这个 Set Map 有多少个 Set Map 条目结构跟随。
+每一个 Set Map 条目与媒体簇中的一个数据集对应。
 
 #### Pad {2 bytes}
 
-The Pad field exists to maintain 32-bit alignment. The field should be initialized to zero.
+Pad 字段用于保持 32 位的对齐。
+这个字段应该初始化为 0。
 
-### Set Map Entry (MTF_SM_ENTRY)
+### Set Map 条目 (MTF_SM_ENTRY)
 
-The Set Map Entry corresponds with the MTF_SSET DBLK it represents in the Data Set.
-Many of the data fields found in this structure contain copies of the data found in the MTF_TAPE, MTF_SSET and MTF_ESET DBLK fields.
+Set Map 条目与数据集中的 MTF\_SSET DBLK 关联。
+很多字段都是拷贝自 MTF\_TAPE，MTF\_SSET 和 MTF\_ESET DBLK 字段。
 
-> **TODO** Structure 32. Type 1 MBC Set Map Entry (MTF_SM_ENTRY)
+<table>
+  <tr>
+    <th>偏移</th><th>字段名</th><th>类型</th><th>大小</th>
+  </tr>
+  <tr>
+    <td>&nbsp;0 &nbsp;0h</td><td>Length</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>&nbsp;2 &nbsp;2h</td><td>Media Sequence Number</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>&nbsp;4 &nbsp;4h</td><td>Common Block Attributes</td><td>UINT32</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>&nbsp;8 &nbsp;8h</td><td>SSET Attributes</td><td>UINT32</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>12 &nbsp;Ch</td><td>SSET PBA</td><td>UINT64</td><td>8 字节</td>
+  </tr>
+  <tr>
+    <td>20 14h</td><td>FDD PBA</td><td>UINT64</td><td>8 字节</td>
+  </tr>
+  <tr>
+    <td>28 1Ch</td><td>FDD Media Sequence Number</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>30 1Eh</td><td>Data Set Number</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>32 20h</td><td>Format Logical Address</td><td>UINT64</td><td>8 字节</td>
+  </tr>
+  <tr>
+    <td>40 28h</td><td>Number Of Directories</td><td>UINT32</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>44 2Ch</td><td>Number Of Files</td><td>UINT32</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>48 30h</td><td>Number Of Corrupt Files</td><td>UINT32</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>52 34h</td><td>Data Set Displayable Size</td><td>UINT64</td><td>8 字节</td>
+  </tr>
+  <tr>
+    <td>60 3Ch</td><td>Number Of Volumes</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>62 3Eh</td><td>Password Encryption Algorithm</td><td>UINT16</td><td>2 字节</td>
+  </tr>
+  <tr>
+    <td>64 40h</td><td>Data Set Name</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>68 44h</td><td>Data Set Password</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>72 48h</td><td>Data Set Description</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>76 4Ch</td>User Name</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
+  </tr>
+  <tr>
+    <td>80 50h</td><td>Media Write Date</td><td>MTF\_DATE\_TIME</td><td>5 字节</td>
+  </tr>
+  <tr>
+    <td>85 55h</td><td>Time Zone</td><td>INT8</td><td>1 字节</td>
+  </tr>
+  <tr>
+    <td>86 56h</td><td>OS\_ID</td><td>UINT8</td><td>1 字节</td>
+  </tr>
+  <tr>
+    <td>87 57h</td><td>OS\_VERSION</td><td>UINT8</td><td>1 字节</td>
+  </tr>
+  <tr>
+    <td>88 58h</td><td>STRING\_TYPE</td><td>UINT8</td><td>1 字节</td>
+  </tr>
+  <tr>
+    <td>89 59h</td><td>MTF Minor Version</td><td>UINT8</td><td>1 字节</td>
+  </tr>
+  <tr>
+    <td>90 5Ah</td><td>Media Catalog Version</td><td>UINT8</td><td>1 字节</td>
+  </tr>
+  <caption>**Structure 32. Type 1 MBC Set Map Entry (MTF_SM_ENTRY)**</caption>
+</table>
 
 #### Length {2 bytes}
 
-The Length is the size of the MTF_SM_ENTRY plus the size of any appended strings.
+长度是 MTF\_SM|ENTRY 的长度加上附加的字符串的大小。
 
 #### Media Sequence Number {2 bytes}
 
-The Media Sequence Number field corresponds to the Media Sequence Number field in the MTF_TAPE DBLK to which this Data Set belongs.
+Media Sequence Number 字节与数据集属于的 MTF_TAPE DBLK 的对应字段相等。
 
 #### Common Block Attributes {4 bytes}
 
-The Common Block Attributes field has the same organization as the field of the same name in the MTF_DB_HDR structure.
+Common Block Attributes 与 MTF\_DB\_HDR 结构的相同名称的字段一样。
 
 #### SSET Attributes {4 bytes}
 
-The SSET Attributes field is the same as the SSET Attributes field in the MTF_SSET DBLK.
+SSET Attributes 与 MTF_SSET DBLK 的 SSET Attributes 字段一样。
 
 #### SSET PBA {8 bytes}
 
-The SSET PBA field corresponds to the Physical Block Address (PBA) field in the MTF\_SSET DBLK and identifies the PBA of the MTF_SSET DBLK.
+SSET PBA 字段对应 MTF\_SSET DBLK 的 PBA 和标识 MTF\_SSET DBLK 的 PBA。
 
 #### FDD PBA {8 bytes}
 
-The FDD PBA field contains the same information as the File/Directory Detail PBA field of the MTF_ESET DBLK.
-This number specifies the Physical Block Address of the FDD associated with this Data Set.
+FDD PBA 包含了 MTF\_ESET DBLK 的 FDD PBA 字段相同的信息。
+这个数字指定了和数据集关联的 FDD 的 PBA。
 
 #### FDD Media Sequence Number {2 bytes}
 
-The FDD Media Sequence Number is a duplicate of the field of the same name in the MTF_ESET DBLK.
+这个字段与 MTF\_ESET DBLK 的同名字段重复。
 
 #### Data Set Number {2 bytes}
 
-The Data Set Number field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_ESET DBLK 的同名字段重复。
 
 #### Number Of Directories {4 bytes}
 
-The Number Of Directories field indicates the number of directories written as part of this Data Set.
+这个字段指定这个数据集拥有的目录数。
 
 #### Number Of Files {4 bytes}
 
-The Number Of Files field indicates the number of files written as part of this Data Set.
+这个字段指定这个数据集拥有的文件数。
 
 #### Number Of Corrupt Files {4 bytes}
 
-The Number Of Corrupt Files field indicates the number of corrupt files written as part of this Data Set.
+这个字段指定这个数据集拥有的损坏文件数。
 
 #### Data Set Displayable Size {8 bytes}
 
-The Data Set Displayable Size field indicates the cumulative size of the Data Set.
-This should be the sum of the displayable size of every file in the Data Set.
+这个字段指明数据集的累加大小。
+这个值应该是数据集中每个文件的 displayable 大小。
 
 #### Number Of Volumes {2 bytes}
 
-The Number Of Volumes field should correspond with the number of MTF_ VOLB DBLKs in the Data Set and with the number of Volume Entries that will follow this Set Map Entry (MTF_SM_ENTRY) structure.
+这个字段对应于数据集拥有多少个 MTF\_VOLB DBLK 同时对应于跟随这个 Set Map 条目（MTF\_SM\_ENTRY）的卷条目有多少个。
 
 #### Password Encryption Algorithm {2 bytes}
 
-The Password Encryption Algorithm field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### Data Set Name {4 bytes}
 
-The Data Set Name field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### Data Set Password {4 bytes}
 
-The Data Set Password field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### Data Set Description {4 bytes}
 
-The Data Set Description field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### User Name {4 bytes}
 
-The User Name field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### Media Write Date {5 bytes}
 
-The Media Write Date field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### Time Zone {1 bytes}
 
-The Time Zone field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的同名字段重复。
 
 #### OS_ID (1 byte}
 
-The OS_ID field is a duplicate of the field of the same name in the MTF_DB_HDR structure of the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的 MTF\_DB\_HDR 的同名字段重复。
 
 #### OS_VERSION (1 byte}
 
-The OS_VERSION field is a duplicate of the field of the same name in the MTF_DB_HDR structure of the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的 MTF\_DB\_HDR 的同名字段重复。
 
 #### STRING_TYPE (1 byte}
 
-The STRING_TYPE field specifies the format of strings stored in the Set Map.
-Refer to the definition of this field in the description of the MTF_DB_HDR structure.
+这个字段指示 Set Map 中存储的字符串的格式。
+参考 MTF\_DB\_HDR 结构中这个字段的定义。
 
 #### MTF Minor Version {1 byte}
 
-The MTF Minor Version field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的 MTF\_DB\_HDR 的同名字段重复。
 
 #### Media Catalog Version {1 byte}
 
-The Media Catalog Version field is a duplicate of the field of the same name in the MTF_SSET DBLK.
+这个字段与 MTF\_SSET DBLK 的 MTF\_DB\_HDR 的同名字段重复。
 
-> Note: All strings associated with a Set Map Entry are appended immediately after, and pointed to by the
-MTF_TAPE_ADDRESS entries. The Offset field within the MTF_TAPE_ADDRESS structure specifies
-offsets from the start of this MTF_SM_ENTRY structure to the string being referred to.
+> 注意：所有与 Set Map 关联的字符串会马上附加在其后，然后由 MTF\_TAPE\_ADDRESS 指明位置。
+MTF\_TAPE\_ADDRESS 结构的 Offset 字段是从本 MTF\_SM\_ENTRY 开始算的。
 
 ### Volume Entry
 
-The Volume Entry structure in the Set Map is identical to the MTF_FDD_VOLB entry in the File/Directory Detail. Please
-refer to the description of the MTF_FDD_VOLB earlier in this section.
+Set Map 中的 Volume Entry 结构与 FDD 的 MTF\_FDD\_VOLB 条目等价。
+请参考本节前面关于 MTF\_FDD\_VOLB 的说明。
 
 ### End of Media Issues
 
-It is possible to encounter EOM while writing MBC information to media. Refer to Appendix J for detailed information on
-End Of Media processing and the way it is handled under different conditions.
+有可能遇到在写 MBC 信息的时候遇到 EOM 的情况。
+请查看第 8 部分来获取有关 EOM 在不同情况下出现以及如何处理的更多信息。
