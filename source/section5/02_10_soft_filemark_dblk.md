@@ -1,6 +1,6 @@
-# 软卷标描述块（MTF_SFMB）
+# 软卷标描述块（MTF\_SFMB）
 
-**软卷标描述块**（MTF_SFMB）当硬件不支持卷标的时候用来模拟卷标。
+**软卷标描述块**（MTF\_SFMB）当硬件不支持卷标的时候用来模拟卷标。
 设置 MTF\_TAPE DBLK 的磁带属性字段来启用软卷标。
 MTF\_TAPE DBLK 的软卷标块大小字段决定了 MTF\_SFMB DBLK 的大小。
 MTF\_SFMB DBLK 必须设置为能从物理块边界开始和在物理块边界结束。

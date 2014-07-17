@@ -24,7 +24,7 @@ MTF\_DB\_HDR 的 Offset To First Event field 字段改为指向数据流中的�
 ## 文件/目录 细节
 
 FDD 是一个流头的流 ID 字段为 'FDD2' 的流。
-流头标这是一个第二类 MBC FDD 以及跟着一系列的 DBLKs。
+流头标识这是一个第二类 MBC FDD 以及跟着一系列的 DBLKs。
 第二类 FDD 由 MTF\_VOLB，MTF\_DIRB，MTF\_FILE 和 MTF\_CFIL DBLKs 组成。
 所有的 DBLKs 都是被封装的。
 公共头的 Reserved for MBC 和 Offset To First Event fields 字段被修改。

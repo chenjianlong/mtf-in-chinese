@@ -40,7 +40,7 @@
     <td>MBC\_LMO\_FDD\_STREAM</td><td>查看 第一类 MBC。</td><td>'TFDD'</td>
   </tr>
   <tr>
-    <td>MBC\_SLO\_SET\_MAP\_STREAM/td><td>查看 第二类 MBC。</td><td>'MAP2'</td>
+    <td>MBC\_SLO\_SET\_MAP\_STREAM</td><td>查看 第二类 MBC。</td><td>'MAP2'</td>
   </tr>
   <tr>
     <td>MBC\_SLO\_FDD\_STREAM</td><td>查看 第二类 MBC。</td><td>'FDD2'</td>
