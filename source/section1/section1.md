@@ -1,12 +1,12 @@
 # 介绍
 
-This document describes the logical data format used in Microsoft Tape Format (MTF). Media types which can use this data
-format include magnetic tapes of many types (QIC, 4mm DAT, 8mm, DLT, etc.), optical disks (Power Drive, CD-ROM),
-magnetic disks, etc. MTF is used while writing and reading data to and from removable storage devices during storage
-management or data protection operations such as data transfers, copies, backup and restore.
-Throughout this document, the term “tape” is used when referring to the removable media. Tapes are shown in most of the
-diagrams depicting the physical layout of data. Even some of the data structures include the name “TAPE”. Keep in mind that
-disk based media is equally suitable for MTF and tape is used only as an example, and because this specification originated as
-a tape format specification before optical disk media became a viable solution for storage management.
-This format is compatible with the data format used in the NT Backup applet program that comes bundled with Microsoft ®
-Windows NT TM version 3.X and 4.X.
+本文档说明了Microsoft Tape Format (MTF) 使用的逻辑数据格式。
+可以使用本数据格式的媒介包括各种类型的磁带（QIC， 4mm DAT， 8mm， DLT， 等。），光盘（Power Drive， CD-ROM），等。
+MTF 用于在存储管理或者数据保护操作（例如：数据传输，复制，备份和恢复）过程中对可移存储设备进行读写。
+在这个文档中，“磁带” 用于表示可移动媒介。
+Tapes 用于大部分的描绘物理结构的图。
+即使某些数据结构使用了名称 “TAPE”。
+需要记住的是光盘也是适用的，磁带只是用于举例，
+当然这也是因为本说明开始时是作为磁带格式说明的，
+因为在此之前光盘还没成为存储管理的可行解决方案。
+本格式与 Windows NT Version 3.X 和 4.X 的 NT Backup 程序的数据格式是兼容的。
