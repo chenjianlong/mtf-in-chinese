@@ -1,26 +1,15 @@
 # 设计目标
 
-This sections describes the design goals employed in the development of the Microsoft Tape Format.
+这部分说明了 Microsoft Tape Format 的设计目标。
 
-* Fast retrieval of stored data.
-* Low processing overhead to ensure optimum performance on low-end systems and devices. This is accomplished by
-careful design of the control structures to reduce the amount of interpretation the application software needs to do.
-* Allows applications to ignore information on the media that is not understood by the target operating system. This
-feature makes it possible to restore data across platforms (e.g., data backed up on an Apple Macintosh system may be
-restored to a DOS system, ignoring the resource fork which DOS does not understand).
-* The ability to extend the format for specialized processing by adding new DBLKs and data streams without rendering
-the format unreadable by other applications. Applications which are not aware of the extensions can easily skip over
-them, both increasing backward/forward compatibility, and allowing the restoration of data from media created by
-another vendor's application.
-* Data structures are arranged so that 32-bit values are aligned on 32-bit boundaries, and 16-bit values are aligned on 16-
-bit boundaries. This is important because some processors require this alignment to run at maximum efficiency. By
-making sure this alignment is followed it is easier for the implementor to map these structures directly onto data buffers.
-* Reliable end of media handling.
-* The ability to restore any remaining portion of a Data Set which spans multiple media (tapes or disks) in the event one
-or more media is lost or damaged.
-* Format support to deal with corrupt files encountered on the primary storage volume that is being written to removable
-media.
-* Support for unlimited directory path and file name lengths.
-* 64-bit file data sizes.
-* Allows the application to take full advantage of a drive's capabilities (e.g., Block Seek, Fast Seek to End of Data, etc.)
-without hindering less capable drives.
+* 快速返回存储数据
+* 低处理开销，确保在低端系统和设备能获得最佳性能。这是通过精心设计的控制结构来减少应用程序需要做的解析而实现的。
+* 允许目标操作系统的应用程序忽略媒介中不认识的信息。这个特性使得可以跨平台的忽略数据（比如，从苹果的 Macintosh 系统备份的数据可以恢复到 DOS 系统，忽略 DOS 不认识的资源）。
+* 特殊化处理新添加的 DBLKs 和 数据流的扩展格式，而其它应用不用了解新增的格式。不关心这种扩展的应用可以简单的跳过它，增加了 向后/向前 的兼容性，并且允许其他的销售的应用可以恢复数据。
+* 数据结构被编排过从而使得 32 位的值会在 32 位的边界对齐，而 16 位的值会在 16 位边界对齐。这非常重要因为有些处理器需要这种对齐从而达到最大的性能。通过这种对齐，实现者可以很容易的直接将数据结构映射到数据缓冲区中。
+* 可靠的 end of media 处理。
+* 可以恢复那些跨越多个媒介的数据集的部分数据，即使有一个或多个媒介已经丢失或者损坏了。
+* 支持从主存储器写到可移动存储的时候处理损坏的文件。
+* 支持无限制的目录路径和文件名长度。
+* 64 位的文件数据大小。
+* 允许应用最大化的使用驱动器的能力（比如：块寻找，快速寻找数据的结尾，等）而不会被能力较差的驱动器阻碍。
