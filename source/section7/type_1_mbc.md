@@ -150,7 +150,7 @@ MTF\_FDD\_HDR 结构的 LINK 字段指示另一个 FDD 条目的偏移。
 
 * 文件条目 父目录的流偏移。
 * 卷条目 下一个卷条目的流偏移，如果是最后一个 MTF\_FDD\_VOLB 条目那么这个字段为 0。
-* 目录条目 下一个兄弟目录的流偏，如果是最后一个目录则为 0。
+* 目录条目 下一个兄弟目录的流偏移，如果是最后一个目录则为 0。
 
 #### OS\_ID {1 byte}
 
@@ -570,7 +570,7 @@ Set Map 条目与数据集中的 MTF\_SSET DBLK 关联。
     <td>72 48h</td><td>Data Set Description</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
   </tr>
   <tr>
-    <td>76 4Ch</td>User Name</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
+    <td>76 4Ch</td><td>User Name</td><td>MTF\_TAPE\_ADDRESS</td><td>4 字节</td>
   </tr>
   <tr>
     <td>80 50h</td><td>Media Write Date</td><td>MTF\_DATE\_TIME</td><td>5 字节</td>

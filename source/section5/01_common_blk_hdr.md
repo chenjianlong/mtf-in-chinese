@@ -164,7 +164,7 @@ _Offset To First Event_ 字段用于指定第一个和 DBLK 关联的数据流�
 如果没有数据流和 DBLK 关联，那么这个成员将包含下一个 DBLK 的偏移。
 
 > 注意：这是为了和 MTF Version 1.0 草案之前的版本向下兼容。
-> MTF Version 1.00a 指定了所有的 DBLKs 至少有一个数据流和它关联以及最后一个数据流为SPAD 数据流。
+> MTF Version 1.00a 指定了所有的 DBLKs 至少有一个数据流和它关联以及最后一个数据流为 SPAD 数据流。
 
 **OS ID {2 bytes}**
 
