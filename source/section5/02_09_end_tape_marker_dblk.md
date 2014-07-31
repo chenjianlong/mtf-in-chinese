@@ -13,7 +13,7 @@
     <td>&nbsp;0 &nbsp;0h</td><td>公共的块头</td><td>MTF\_DB\_HDR</td><td>52 字节</td>
   </tr>
   <tr>
-    <td>52 34h></td><td>最后的 ESET PBA</td><td>UINT64</td><td>8 字节</td>
+    <td>52 34h</td><td>最后的 ESET PBA</td><td>UINT64</td><td>8 字节</td>
   </tr>
   <caption>**结构 13. 磁带标记结束描述块**</caption>
 </table>
