@@ -1,67 +1,53 @@
 # 结束媒体处理
 
-This section is devoted to End Of Media (EOM) processing.
-The following diagram is an example of a 1.0 format Data Set
-with marks at all unique points at which End Of Media (EOM) early warning may be detected.
-This is followed by diagrams and brief explanations of what is written on the original and continuation media in each case.
+本节致力于 结束媒体（EOM）的处理。
+下图是标识了所有 EOM 可以会出现的点的 1.0 版本的数据集格式。
+接下来的是每种情况的原始和续集媒介的图以及简要的解释了如何写原始和续集媒介。
 
 ![](images/eom_01.png)
 
-Before beginning the detailed explanation of how each case is handled, there are certain general concepts which need to be
-explained.
+在开始详细解释各种情是怎么处理之前，有几个通用的概念需要说明。
 
-What will be referred to as "normal EOM processing" consists of writing a filemark, an End Of Tape Marker (MTF_EOTM)
-block and another filemark, getting a continuation tape and writing a tape header with the continuation bit set in its attribute
-field followed by a filemark. Any exceptions to this process will be noted in the detail for that case.
+“普通的 EOM 处理”由卷标，MTF\_EOTM 和另一个卷标组成，
+然后获取续集磁带并且写入一个在属性中设置了 continuation bit set 的磁带头并且接着写入一个卷标。
+在下列的情况中，任何与这个处理不一致的地方都会指出来。
 
-While the only block shown to have associated data is the MTF_FILE, methods for handling data associated with any block
-should be handled in a similar fashion. It is important to note that MTF_SSET, MTF_VOLB and MTF_DIRB blocks can be
-repeated on the continuation tape, with the continuation bit set in its attribute field, even when they are not the current block
-being processed. This is because they contain information which is necessary for reading and restoring data from the
-continuation tape without the need for the tape where the data management operation was started. However, if they have any
-associated data, it is not repeated, and the data size should be zero.
+下面的显示中只有 MTF\_FILE 有关联的数据，但是处理与任意的 DBLK 关联的数据的方法都是类似的。
+注意到 MTF\_SSET，MTF\_VOLB 和 MTF\_DIRB 块可以在续集磁带中重复是很重要的（即使它们不是当前处理的块），在续集中需要设置  continuation 比特。
+这是因为它们包含了用于从续集磁中读取和恢复数据的信息，而不用数据管理操作开始的时候的那个磁带。
+然而，如果它们有任何的关联数据，这些数据不需要重复，只需要将数据的大小设置为 0。
 
-The split across EOM always occurs on Format Logical Block boundaries. For purposes of EOM processing, an image block
-and data is treated the same as a MTF_FILE block and data.
+EOM 的切分通常是发生在 FLB 边界的。
+为了 EOM 处理的目的，镜像块和数据会和 MTF\_FILE 块和数据一样处理。
 
-> NOTE: In all the diagrams that follow, '*' indicates that the continuation bit (MTF_CONTINUATION) is set in the Block
-Attributes filed of the MTF_DB_HDR in the DBLK.
+> 注意：在下面的所有图中，'*' 表示 DBLK 中的 MTF\_DB\_HDR 的 Block
+Attributes 字段设置 MTF\_CONTINUATION 比特。
 
-1. EOM after MTF_SSET - Process EOM normally, write the MTF_SSET again with the continuation bit set, and begin
-writing again from the point you left off.
+1. EOM 在 MTF\_SSET 之后 - 正常处理 EOM，在下一个媒介中重写 MTF\_SSET 并且设置 continuation 比特，然后从中断的地方继续写。
 ![](images/eom_a.png)
-2. EOM after MTF_VOLB - Process EOM normally, write the MTF_SSET and the current MTF_VOLB again with the
-continuation bit set in each, and begin writing again from the point you left off.
+2. EOM 在 MTF\_VOLB 之后 - 正常处理 EOM，在下一个媒介中重写 MTF\_SSET 和 MTF\_VOLB 并且设置 continuation 比特，然后从中断的地方继续写。
 ![](images/eom_b.png)
-3. EOM after MTF_DIRB - Process EOM normally, write the MTF_SSET, and the current MTF_VOLB and
-MTF_DIRB again with the continuation bit set in all three, and begin writing again from the point you left off.
+3. EOM 在 MTF\_DIRB 之后 - 正常处理 EOM，在下一个媒介中重写 MTF\_SSET，MTF\_VOLB 和 MTF\_DIRB 并且在这三个 DBLK 中都设置 continuation 比特，然后从中断的地继续写。
 ![](images/eom_c.png)
-4. EOM after MTF_FILE - Process EOM normally, and write the MTF_SSET, and the current MTF_VOLB and
-MTF_DIRB again with the continuation bit set in all three. Write the MTF_FILE again with the continuation bit set,
-then write the data associated with that MTF_FILE, and continue on. Note that the data is written immediately
-following the MTF_FILE block, and since EOM always occurs at a Format Logical Block boundary, the chances of
-EOM occurring at this point are very low.
+4. EOM 在 MTF\_FILE 之后 - 正常处理 EOM，在下一个媒介中重写 MTF\_SSET 和 当前的 MTF\_VOLB 和 MTF\_DIRB 并且都设置 continuation 比特。
+写 MTF\_FILE 并设置 continuation 比特，然后继续写 MTF\_FILE 关联的数据。
+需要注意的是数据是紧跟着 MTF\_FILE 块的，而 EOM 总是出现在 FLB 的边界，EOM 出现在这里的概率非常小。
 ![](images/eom_d.png)
-5. EOM in mid MTF_FILE data - Process the EOM in the same manner as example d. Since the data was split at a
-Format Logical Block boundary, and the pad at the end of the data is already calculated to align the next block on a
-Format Logical Block boundary, the remaining data is written beginning at the next Format Logical Block boundary,
-rather than flush against the end of the continuation MTF_FILE block.
+5. EOM 在 MTF\_FILE 数据的中间 - 和第四种情况一样处理 EOM。
+因为数据会在 FLB 边界被分割，而数据结尾的填充数据也会填充到下一个 FLB 边界，the remaining data is written beginning at the next Format Logical Block boundary, rather than flush against the end of the continuation MTF_FILE block.
 ![](images/eom_e.png)
-6. EOM at end of MTF_FILE data - Unlike the MTF_SSET, MTF_VOLB and MTF_DIRB, the information in the
-MTF_FILE block is not needed on the continuation tape if the MTF_FILE data is written completely. Therefore,
-writing a continuation MTF_FILE DBLK is optional, and the continuation processing is done in the same manner as
-example c. i.e. The continuation DBLKs are written, and then the write operation continues with the block that was
-due to be written when EOM occurred.
-7. EOM at End Of Set - In this case, all set information is on tape, but the MTF_EOTM is still written as if the set
-continues on the next tape. Note that if the first filemark has been written, we do not write another. Only the
-continuation MTF_SSET needs to be written before closing out the set normally, but it must also have the bit set to
-indicate that the data for this set is contained fully on the previous tape.
+6. EOM 在 MTF\_FILE 数据的结尾 - 与 MTF\_SSET，MTF\_VOLB 和 MTF\_DIRB 不一样，如果数据已经写完，MTF\_FILE 块的信息不需要保存在续集磁带。
+因此，写一个续集的 MTF\_FILE DBLK 是可选的，而续集处理与第三种情况一样。
+i.e. The continuation DBLKs are written, and then the write operation continues with the block that was due to be written when EOM occurred.
+7. EOM 在 数据集数据的结尾 - 在这种情况下，所有数据已经保存在磁带中，但是 MTF\_EOTM 需要写入来表示数据集延续到下一个磁带。
+注意如果第一个卷标已经写入，我们不需要写入另一个。
+只需要在结束数据集之前写入续集的 MTF\_SSET，但是它必须要用一个比特来表示这个数据集的数据完全包含在前一个磁带中。
 ![](images/eom_g_and_h.png)
-8. EOM between sets - In these two cases, the MTF_ESET has already been written, and the set is completed, but we do
-not want another set started on this tape. Therefore, we write an MTF_EOTM where the next MTF_SSET would be
-expected, followed by a filemark. A continuation tape is written identical to the one written for cases g & h. This is
-done to guarantee the existence of a unique continuation tape for beginning the next set. Note that while a
-MTF_TAPE DBLK alone is sufficient to mark a unique continuation tape, information such as the number of the last
+8. EOM 出现在数据集之间 - 在这种情况下 MTF\_SSET 已经写入，并且数据集是完整的，但是我们不想要在这个磁带中开始另一个数据集。
+因此，我们在本来应该出现下一个 MTF\_SSET 的地方写入 MTF\_EOTM，然后跟着一个 卷标。
+续集磁带的写入与第七种情况相同。
+This is done to guarantee the existence of a unique continuation tape for beginning the next set.
+Note that while a MTF_TAPE DBLK alone is sufficient to mark a unique continuation tape, information such as the number of the last
 Data Set is necessary to append to the Media Family without requesting the previous tape.
 ![](images/eom_i_and_j.png)
 The following diagram is an example of an MTF Version 1.00a format Data Set with Media Based Catalogs (MBC) showing
@@ -81,14 +67,15 @@ What will be referred to as "normal EOM processing" for MBC cases consists of wr
 its attribute field followed by a filemark, then writing the MTF_SSET with continuation bit set, another filemark, and finally
 the starting MTF_ESET with continuation bit set. Any exceptions to this process will be noted in the detail for that case.
 File/Directory Data will be referred to as FDD, and the Set Map as SM.
-9. EOM after first MTF_ESET - Process EOM normally, then begin writing the FDD.
-10. EOM in mid FDD - Process EOM normally, then continue writing the FDD.
-11. EOM after FDD - Process EOM normally, then begin writing the SM.
-12. EOM in mid Set Map - Process EOM normally. The Set Map is then rewritten from the start. The Set Map is never split between tapes!
-13. EOM after Set Map - This case is handled the same way as in case n. The goal here is to make the Set Map available
-on the last tape in the Media Family. This makes the MBC processing a lot cleaner, and eliminates requiring the user
-to switch back and forth between tapes when searching for the last Set Map in a Media Family.
-14. EOM between sets - As in cases i and j, the MTF_ESET is already written before we hit EOM, and the set is
-complete. So we write an MTF_EOTM where the next MTF_SSET would be expected, followed by a filemark.
-However, we still want a copy of the Set Map on the last tape in the Media Family. Therefore, we write the
-continuation tape in the same manner as case o.
+9. EOM 在第一个 MTF\_ESET 后面 - 正常处理 EOM，然后写入 FDD。
+10. EOM 在 FDD 中间 - 正常处理 EOM，然后继续写入 FDD。
+11. EOM 在 FDD 后面 - 正常处理 EOM，然后开始写入 SM。
+12. EOM 在 Set Map 中间 - 正常处理 EOM。
+Set Map 从开头重新写。Set Map 永远不会分割在不同磁带中！
+13. EOM 在 Set Map 之后 - 这种情况与第十三种情况一样处理。
+这样做的目的是使得 Set Map 总在 Media Family 的最后一个磁带有效。
+这使得 MBC 的处理更加清晰，免除了用户在不同磁带中进行切换来搜索 Media Family 中最后一个 Set Map 的情况。
+14. EOM 在数据集之间 - 如第八种情况，在遇到 EOM 之前已经写了 MTF\_ESET，数据集已经完成。
+所以我们在下一个 MTF\_SSET 预期出现的地方写入 MTF\_EOTM，然后跟着一个卷标。
+然而，我们仍然需要拷贝上一个磁带的 Set Map。
+因此，我们像第十三种情况一样写续集磁带。
