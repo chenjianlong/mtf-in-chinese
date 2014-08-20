@@ -121,10 +121,10 @@ STREAM\_EMBEDDED\_LENGTH 比特已经废弃，在这里还提供的主要原因�
     <th>偏移</th><th>内容</th><th>类型</th><th>大小</th>
   </tr>
   <tr>
-    <td>&nbsp;0 &nbsp;0h</td><td>流长度</td><td>UINT64</td><td>4 字节</td>
+    <td>&nbsp;0 &nbsp;0h</td><td>流长度</td><td>UINT64</td><td>8 字节</td>
   </tr>
   <tr>
-    <td>&nbsp;4 &nbsp;4h</td><td>校验</td><td>UINT16</td><td>2 字节</td>
+    <td>&nbsp;8 &nbsp;8h</td><td>校验</td><td>UINT16</td><td>2 字节</td>
   </tr>
   <caption>**结构 16. STREAM\_EMBEDDED\_LENGTH**</caption>
 </table>

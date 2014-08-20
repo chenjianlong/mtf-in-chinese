@@ -69,7 +69,7 @@ MTF 的 DBLK 大小在 MTF\_TAPE DBLK 格式化的逻辑块大小限制。
 
 > 注意：当发生跨越时，在流中的目录名必须与续集的  MTF\_DIRB DBLK 关联。
 
-### 在流的文件（FILE\_NAME\_STREAM）
+### 在流的文件名（FILE\_NAME\_STREAM）
 
 当流头的流 ID 字段设为 'FNAM' 时表示数据流为在流的文件名。
 MTF 的 DBLK 大小在 MTF\_TAPE DBLK 格式化的逻辑块大小限制。
