@@ -102,7 +102,7 @@ FDD 公共头由条目的长度，类型，属于的媒介和其他通常与 DBL
     <td>34 22h</td><td>STRING\_TYPE</td><td>UINT8</td><td>1 字节</td>
   </tr>
   <tr>
-    <td>35 23h</td><td>PAD UINT8</td><td>UINT8</td><td>1 字节</td>
+    <td>35 23h</td><td>PAD</td><td>UINT8</td><td>1 字节</td>
   </tr>
   <caption>**结构 26. 第一类 MBC FDD 公共头（MTF\_FDD\_HDR）**</caption>
 </table>
@@ -128,7 +128,7 @@ MEDIA\_SEQ\_NUMBER 标识这个 FDD 属于媒体簇中哪个媒介。
 COMMON\_BLOCK\_ATTRIBUTES 字段应该与关联的数据集中的 MTF\_DB\_HDR
 的相应字段相等。
 因此，关于续集，压缩，媒介尾，变长流，等。
-可以从这些属性中获得。
+可以从这个属性中获得。
 
 #### FORMAT LOGICAL ADDRESS {8 bytes}
 
@@ -598,7 +598,7 @@ Set Map 条目与数据集中的 MTF\_SSET DBLK 关联。
 
 #### Length {2 bytes}
 
-长度是 MTF\_SM|ENTRY 的长度加上附加的字符串的大小。
+长度是 MTF\_SM\_ENTRY 的长度加上附加的字符串的大小。
 
 #### Media Sequence Number {2 bytes}
 
