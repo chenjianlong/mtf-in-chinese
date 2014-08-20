@@ -6,7 +6,7 @@ MTF\_TAPE DBLK 的软卷标块大小字段决定了 MTF\_SFMB DBLK 的大小。
 MTF\_SFMB DBLK 必须设置为能从物理块边界开始和在物理块边界结束。
 MTF\_SFMB DBLK 不能有关联的数据流。
 MTF\_SFMB DBLK 包含了上一个卷标的一个数组的物理块地址。
-如果数组中个一个入口没有被使用，那么它需要被设为 0。
+如果数组中一个入口都没有被使用，那么它需要被设为 0。
 
 <table>
   <tr>
@@ -22,7 +22,7 @@ MTF\_SFMB DBLK 包含了上一个卷标的一个数组的物理块地址。
     <td>56 38h</td><td>已使用的卷标条目</td><td>UINT32</td><td>4 字节</td>
   </tr>
   <tr>
-    <td>60 3Ch</td><td>先前的卷标数组的 PBA</td><td>UINT32</td><td>sizeof (MTF_SFMB) - 60</td>
+    <td>60 3Ch</td><td>先前的卷标数组的 PBA</td><td>UINT32 **（应该是 UINT64）**</td><td>sizeof (MTF_SFMB) - 60</td>
   </tr>
   <caption>**结构 14. 软卷标描述块**</caption>
 </table>
@@ -44,10 +44,10 @@ MTF\_DB\_HDR 结构的下列成员必须设为定义的值。
 
 已使用的卷标条目 是一个 4 字节的包含上一个 PBA 的卷标数组有多少个有效的卷标的字段。
 
-## 先前的卷标数组的 PBA {4 byte elements}
+## 先前的卷标数组的 PBA {8 byte elements}
 
 先前的卷标数组的 PBA 字段是一个卷标元素的数组。
-每个卷标元素是一个上一个卷标的 4 字节的 PBA。
+每个卷标元素是一个上一个卷标的 8 字节的 PBA。
 上一个卷标数组的 PBA 是累积的。
 条目总是按降序排。
 当先前的文件标记的数量超过了数组中的条目数，数组是用最接近数据结尾（EOD）的条目来填充的。
