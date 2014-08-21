@@ -1,10 +1,9 @@
 # 附录 A 操作系统的特性数据
 
-The _OS Specific Data_ field of the MTF\_DB\_HDR provides a storage location for Operating System Specific Information.
-The OS ID and OS Version fields in the MTF\_DB\_HDR define the type of operating system specific data is stored in the OS
-Specific Data field.
-These structures are defined for their respective platforms and use native data types.
-All structures must be packet.
+MTF\_DB\_HDR 的 _OS Specific Data_ 字段提用于指存储操作系统特性数据的位置。
+MTF\_DB\_HDR 中的 OS ID 和 OS Version 字段用于定义 OS Specific Data 字段存储的操作系特性数据类型。
+这些结构是使用原始的数据类型定义在它们各自的平台的。
+所有的结构都是经过封装的。
 
 <table>
   <tr>
@@ -46,8 +45,8 @@ All structures must be packet.
   <caption>**表 29. OS ID 和 OS Version 矩阵**</caption>
 </table>
 
-OS ID values less than 128 may only be assigned by the MTF Review Committee.
-OS ID values 128-255 are reserved for vendor specific use.
+小于 128 的 OS ID 由 MTF Review Committee 来定义。
+在 128 - 255 之间的 OS ID 是为销售商预留的。
 
 ## NetWare (OS ID Number 1, OS Version Number 0)
 
@@ -122,9 +121,9 @@ MTF\_DB\_HDR 的 OS ID 字段必须是 14，而 MTF\_DB\_HDR 的 OS Version 字�
 
 **NT Backup Set Attributes {4 bytes}**
 
-The NT Backup Set Attributes field is a four byte (32-bit) field specifying attributes that pertain to the NT volume.
-Bit 0 is defined below.
-Bits 1 - 23 are reserved for future use, and the most significant 8-bits (BIT24 - BIT31) are reserved for vendor specific attributes.
+NT Backup Set Attributes 字段是一个 4 字节（32 位）的字段，指定了所属的 NT 卷的属性。
+Bit 0 如下所定义。
+Bits 1 - 23 为将来使用而预留，最高的 8 位（BIT24 - BIT31）是为销售商预留的。
 
 <table>
   <caption>**Table 27. TAPE Attributes**</caption>
