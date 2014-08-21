@@ -1,8 +1,9 @@
 # 附录 C 数据压缩算法
 
-MTF currently defines a single data compression algorithm based on the Stac Technologies LZS221 compression libraries. The
-definition of the LZS221 compression algorithm is intended to provide cross product tape interchange of software compressed
-streams. It is assumed that a working knowledge of the LZS221 compression libraries is known.
+MTF 当前定义了一种基于 Stac Technologies LZS221 compression libraries 数据压缩算法。
+LZS221压缩算法的定义是为了提供支持生产环境的磁带切换的软件压缩
+流。
+它假设了你已经知道如何使用 LZS221 compression libraries 进行工作。
 
 <table>
   <caption>**Table 31. Data Compression Algorithm Table**</caption>
@@ -16,16 +17,16 @@ streams. It is assumed that a working knowledge of the LZS221 compression librar
 
 ## Common Block Header
 
-All Common Block Headers in the Data Set are set to indicate possibility of compressed streams. The MTF_COMPRESSION
-bit is set in the Block Attributes field and the Software Compression Algorithm field is set to the value of 0x0ABE.
-Note: Compression cannot be used on End of Set (MTF_ESET) Data Streams.
+数据集中的 Common Block Headers 需要设置来表明会出现压缩流。
+需要设置 Block Attributes 字段的 MTF_COMPRESSION 比特以及 Software Compression Algorithm 需要设为 0x0ABE。
+
+> 注意：压缩不能用于  End of Set（MTF\_ESET）的数据流。
 
 ## Stream Header
 
-To indicate the stream is compressed in the Stream Header, set the STREAM_COMPRESSED bit in the Stream Tape Format
-Attributes field and set the Data Compression Algorithm field to the value of 0x0ABE. If the compressed stream is variable
-length (STREAM_VARIABLE), all Stream Headers used to make up the variable length stream are set to indicate
-compression is active. Once compression is active, all stream data must be encapsulated by Compression Frame Headers.
+在 Stream Header 的 Stream Tape Format Attributes 字段设置 STREAM\_COMPRESSED 比特以及设置 Data Compression Algorith 字段为 0x0ABE 来表示这个流是压缩的。
+如果压缩流是变长的（STREAM\_VARIABLE）所有组成变长流的 Stream Headers 都需要指定使用压缩。
+当启用压缩，所有的流数据都必须被 Compression Frame Headers 封装。
 
 ## LZS221 Buffer Sizes
 
@@ -47,11 +48,11 @@ This is defined in the LZS221 header file.</td><td>LZS_HISTORY_SIZE</td>
   </tr>
 </table>
 
-## Compress
+## 压缩
 
-The LZS221 compression library specifies a Compress API. Uncompressed data is passed in the src buffer and compressed
-data is returned in the dst buffer.
-The following prototype is from the LZS221-86 compression library.
+LZS221 compression library 定义了压缩 API。
+未压缩的数据通过 src buffer 传进，而压缩后数据通过 dst buffer 返回。
+以下的原型来自于 LZS221-86 compression library。
 
 ```cpp
 extern void OS2_API Compress(char **src,
@@ -61,11 +62,11 @@ extern void OS2_API Compress(char **src,
                              char *scratchRAM);
 ```
 
-## Decompress
+## 解压
 
-The LZS221 compression library specifies a Decompress API. Compressed data is passed in the src buffer and uncompressed
-data is returned in the dst buffer.
-The following prototype is from the LZS221-86 compression library.
+LZS221 compression library 定义了解压 API。
+压缩后的数据通过 src buffer 传进，而解缩后数据通过 dst buffer 返回。
+以下的原型来自于 LZS221-86 compression library。
 
 ```cpp
 extern int OS2_API Decompress(char **src,
@@ -75,7 +76,7 @@ extern int OS2_API Decompress(char **src,
                               char *scratchRAM);
 ```
 
-## Compress and Decompress Pseudo Code
+## 压缩和解压伪代码
 
 The following compress and decompress pseudo code integrates into the LZS221-86 compression library and is provided to assist in development.
 
